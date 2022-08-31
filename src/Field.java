@@ -4,6 +4,7 @@ import UnityMath.Vector2;
 
 import java.awt.*;
 import java.util.Arrays;
+import java.util.Random;
 
 public class Field extends ShapeObject {
     public int width;
@@ -12,7 +13,7 @@ public class Field extends ShapeObject {
     public int sizeY;
     public AbstractShape[][] fieldMatrix;
     Field(int w, int h, int size){
-        super("Field", 1);
+        super("Field", 0);
         this.width = w;
         this.height = h;
         this.sizeX = width/size;
@@ -30,6 +31,13 @@ public class Field extends ShapeObject {
                 this.add(rect);
             }
             ii++;
+        }
+    }
+    public void setLabirint(int size){
+        for(int i = 0; i < size; i++){
+            int id = new Random().nextInt(body.size());
+            body.get(id).setColor(Color.DARK_GRAY);
+            body.get(id).id = 1;
         }
     }
 }

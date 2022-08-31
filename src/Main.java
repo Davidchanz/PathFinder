@@ -27,6 +27,7 @@ public class Main {
         scene.setBorderVisible(true);
         size = 20;
         field = new Field(800, 600, size);
+        field.setLabirint(200);
         scene.add(field);
         start = getStart();
         end = getEnd();
@@ -127,16 +128,24 @@ public class Main {
             }
             double[] ranges = new double[4];
 
-            if (i + 1 < field.fieldMatrix.length)
+            if (!isCollision(i+1, j))
                 ranges[0] = find2(new Point(i + 1, j, field.fieldMatrix[i + 1][j]));
-            if (i - 1 >= 0)
+            else
+                ranges[0] = Double.MAX_VALUE;
+            if (!isCollision(i-1, j))
                 ranges[1] = find2(new Point(i - 1, j, field.fieldMatrix[i - 1][j]));
-            if (j + 1 < field.fieldMatrix[i].length)
+            else
+                ranges[1] = Double.MAX_VALUE;
+            if (!isCollision(i, j+1))
                 ranges[2] = find2(new Point(i, j + 1, field.fieldMatrix[i][j + 1]));
-            if (j - 1 >= 0)
+            else
+                ranges[2] = Double.MAX_VALUE;
+            if (!isCollision(i, j-1))
                 ranges[3] = find2(new Point(i, j - 1, field.fieldMatrix[i][j - 1]));
+            else
+                ranges[3] = Double.MAX_VALUE;
 
-            double min = 1000000;
+            double min = Double.MAX_VALUE;
             for(var it: ranges){
                 if(it <= min)
                     min = it;
@@ -166,5 +175,11 @@ public class Main {
         double x = Math.abs(point.object.position.x - end.object.position.x);
         double y = Math.abs(point.object.position.y - end.object.position.y);
         return Math.sqrt(x * x + y * y);
+    }
+    public static boolean isCollision(int i, int j){
+
+        if(i < 0 || j < 0 || i >= field.fieldMatrix.length || j >= field.fieldMatrix[0].length)
+            return true;
+        else return field.fieldMatrix[i][j].id == 1;
     }
 }
