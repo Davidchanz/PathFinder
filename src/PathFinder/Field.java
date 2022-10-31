@@ -1,3 +1,4 @@
+package PathFinder;
 import Engine2D.*;
 import Engine2D.Rectangle;
 import UnityMath.Vector2;
